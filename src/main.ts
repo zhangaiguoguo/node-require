@@ -1,38 +1,12 @@
 const fs = require("node:fs");
 const path2 = require("node:path");
 const ts = require("typescript");
-
+const { isBuiltin } = require("node:module");
 const mps = new Map();
 
 function require2(path: string) {
     return $require(path);
 }
-
-const BuiltinModules = [
-    "fs",
-    "http",
-    "https",
-    "path",
-    "url",
-    "os",
-    "buffer",
-    "net",
-    "tls",
-    "crypto",
-    "stream",
-    "zlib",
-    "assert",
-    "events",
-    "util",
-    "querystring",
-    "readline",
-    "child_process",
-    "cluster",
-    "dns",
-    "domain",
-    "tty",
-    //...
-];
 
 function $require(path: string, dir: string = __dirname) {
     if (isBuiltinModule(path) === true) {
@@ -203,7 +177,7 @@ function findNodeModule(moduleName: string, startDir: string) {
 }
 
 function isBuiltinModule(moduleName: string) {
-    return BuiltinModules.indexOf(moduleName) > -1;
+    return isBuiltin(moduleName)
 }
 
 console.log(require2("./"));
