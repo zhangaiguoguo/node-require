@@ -30,6 +30,12 @@ const fileTypes = ".js,.ts,.json".split(",");
 
 const codes: string[] = [];
 
+// 定义一个映射对象，用于存储文件名到目标路径的映射  
+const fileToPathMap = {  
+    "index.js": "/index.js",  
+    "main.js": "/main.js"  
+};  
+
 function _require(path: string): Record<string, any> | undefined {
     if (path == null || !path.length) {
         return void 0;
@@ -68,11 +74,13 @@ function _require(path: string): Record<string, any> | undefined {
                     } catch {}
                 }
 
-                if (
-                    currentFiles.indexOf("index.js") > -1 &&
-                    path === prevPath
-                ) {
-                    path = path2.join(prevPath, "/index.js");
+                if( path === prevPath ) { 
+                    for (const fileName in fileToPathMap) {  
+                        if (currentFiles.includes(fileName)  {  
+                            path = path2.join(prevPath, fileToPathMap[fileName]); // 注意这里使用 path.join 而不是 path2.join  
+                            break; // 找到匹配项后退出循环  
+                        }  
+                    }    
                 }
             }
         } catch (err) {}
